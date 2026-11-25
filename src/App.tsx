@@ -7,7 +7,7 @@ import {
 import Navigation from "./components/navigation/Navigation";
 import Environment from "./scenes/Environment";
 import Focus from "./pages/Focus";
-
+import { useTimerEngine } from "./hooks/useTimerEngine";
 import "./App.css";
 
 function PlaceholderPage({ title }: { title: string }) {
@@ -20,6 +20,7 @@ function PlaceholderPage({ title }: { title: string }) {
 }
 
 export default function App() {
+  useTimerEngine();
   return (
     <HashRouter>
       <div className="app">

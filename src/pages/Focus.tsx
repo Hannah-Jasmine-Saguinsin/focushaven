@@ -1,12 +1,11 @@
 import RoomScene from "../scenes/RoomScene";
-
+import PomodoroTimer from "../components/timer/PomodoroTimer";
 export default function Focus() {
   return (
     <section className="focus-page">
       <div className="timer-space">
-        {/* Reserved for Phase 5 */}
+        <PomodoroTimer />
       </div>
-
       <div className="room-space">
         <div className="room-canvas">
           <RoomScene />

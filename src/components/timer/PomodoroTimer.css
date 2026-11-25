@@ -1,0 +1,255 @@
+.pomodoro {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 14px;
+  color: #624832;
+}
+
+.timer-heading {
+  text-align: center;
+}
+
+.timer-heading h1 {
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+}
+
+.timer-heading p {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #947b62;
+}
+
+/* Mode selector */
+
+.timer-modes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mode-button {
+  padding: 8px 13px;
+
+  border: 1px solid transparent;
+  border-radius: 30px;
+
+  background: transparent;
+  color: #947b62;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  transition: all 200ms ease;
+}
+
+.mode-button:hover {
+  color: #624832;
+}
+
+.mode-button.selected {
+  background: #f8e3a5;
+  border-color: #e9c98b;
+  color: #624832;
+
+  box-shadow:
+    0 3px 6px #62483212,
+    inset 0 2px 2px #ffffff55;
+}
+
+/* 3D clock canvas */
+
+.timer-canvas {
+  width: 100%;
+  height: clamp(240px, 37vh, 380px);
+
+  position: relative;
+  background: transparent;
+}
+
+/* Digital clock screen */
+
+.clock-display {
+  width: 260px;
+  height: 90px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "JetBrains Mono", monospace;
+  color: #f8e3a5;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+.clock-digits {
+  font-size: 52px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+
+.clock-mode {
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+
+.clock-status {
+  font-size: 8px;
+  letter-spacing: 2px;
+  opacity: 0.65;
+}
+
+/* Secondary accessible controls */
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.timer-controls button {
+  border: none;
+  background: transparent;
+
+  font-size: 12px;
+  color: #80674f;
+  padding: 6px;
+}
+
+.timer-controls button:hover {
+  color: #624832;
+  text-decoration: underline;
+}
+
+.timer-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Duration customization */
+
+.timer-settings {
+  width: min(100%, 300px);
+
+  padding: 12px 16px;
+  border-radius: 16px;
+
+  background: #fff8e980;
+  border: 1px solid #c3a17b44;
+}
+
+.timer-settings label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 0;
+  font-size: 12px;
+}
+
+.timer-settings label span:first-child {
+  flex: 1;
+}
+
+.timer-settings input {
+  width: 60px;
+  padding: 6px;
+
+  border: 1px solid #d8bf99;
+  border-radius: 8px;
+
+  background: #fff8e9;
+  color: #624832;
+}
+
+/* Session blooms */
+
+.session-progress {
+  text-align: center;
+}
+
+.session-blooms {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.session-bloom {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+
+  opacity: 0.3;
+  filter: grayscale(0.7);
+
+  transition: all 300ms ease;
+}
+
+.session-bloom.completed {
+  opacity: 1;
+  filter: none;
+}
+
+.session-progress p {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #947b62;
+}
+
+@media (max-width: 768px) {
+  .pomodoro {
+    padding-top: 24px;
+  }
+
+  .timer-canvas {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 48vh, 460px);
+  min-width: 0;
+
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+
+.timer-canvas:active {
+  cursor: grabbing;
+}
+
+.timer-canvas canvas {
+  touch-action: none;
+}}
+
+@media (min-width: 901px) {
+  .pomodoro {
+    gap: 10px;
+  }
+
+  .timer-heading h1 {
+    font-size: clamp(24px, 2.3vw, 34px);
+  }
+
+  .timer-heading p {
+    margin-top: 4px;
+  }
+
+  .timer-controls {
+    margin-top: 0;
+  }
+
+  .session-progress {
+    margin-top: 4px;
+  }
+}
