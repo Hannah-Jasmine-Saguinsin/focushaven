@@ -1,63 +1,21 @@
 import { Canvas } from "@react-three/fiber";
-import { RoundedBox } from "@react-three/drei";
-import Lighting from "./Lighting";
 
 function Architecture() {
   return (
     <group>
-      {/* Floor */}
+      {/* Seamless floor */}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -1.5, 0]}
         receiveShadow
       >
-        <planeGeometry args={[100, 100]} />
+        <planeGeometry args={[200, 200]} />
 
         <meshStandardMaterial
-          color="#e9d4b5"
-          roughness={0.9}
-        />
-      </mesh>
-
-      {/* Back wall */}
-      <mesh position={[0, 5, -9]} receiveShadow>
-        <planeGeometry args={[100, 30]} />
-
-        <meshStandardMaterial
-          color="#fff1d5"
+          color="#ead6b2"
           roughness={1}
         />
       </mesh>
-
-      {/* Left architectural feature */}
-      <RoundedBox
-        args={[5, 11, 0.5]}
-        radius={0.24}
-        smoothness={4}
-        position={[-7, 2, -6]}
-        castShadow
-        receiveShadow
-      >
-        <meshStandardMaterial
-          color="#f8e3a5"
-          roughness={0.85}
-        />
-      </RoundedBox>
-
-      {/* Right architectural feature */}
-      <RoundedBox
-        args={[4, 12, 0.5]}
-        radius={0.24}
-        smoothness={4}
-        position={[9, 3, -7]}
-        castShadow
-        receiveShadow
-      >
-        <meshStandardMaterial
-          color="#f5e4c7"
-          roughness={0.85}
-        />
-      </RoundedBox>
     </group>
   );
 }
@@ -66,7 +24,6 @@ export default function Environment() {
   return (
     <div className="environment">
       <Canvas
-        shadows
         dpr={[1, 1.5]}
         camera={{
           position: [0, 4, 15],
@@ -77,14 +34,27 @@ export default function Environment() {
         frameloop="demand"
         gl={{ antialias: true }}
       >
-        <color attach="background" args={["#fff1d5"]} />
+        <color
+          attach="background"
+          args={["#fff3d6"]}
+        />
 
         <fog
           attach="fog"
-          args={["#fff1d5", 22, 65]}
+          args={["#fff3d6", 8, 38]}
         />
 
-        <Lighting />
+        <ambientLight
+          intensity={1.5}
+          color="#fff8e8"
+        />
+
+        <directionalLight
+          position={[-6, 9, 5]}
+          intensity={1.2}
+          color="#fff1d2"
+        />
+
         <Architecture />
       </Canvas>
     </div>

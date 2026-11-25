@@ -4,7 +4,7 @@ export default function Focus() {
   return (
     <section className="focus-page">
       <div className="timer-space">
-        {/* Phase 5: Interactive 3D Pomodoro timer */}
+        {/* Reserved for Phase 5 */}
       </div>
 
       <div className="room-space">

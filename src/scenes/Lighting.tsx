@@ -1,34 +1,34 @@
 export default function Lighting() {
   return (
     <>
-      {/* Soft environmental light */}
-      <ambientLight intensity={0.8} color="#fff4df" />
+      <ambientLight
+        intensity={1.1}
+        color="#fff5e5"
+      />
 
-      {/* Natural sky and floor lighting */}
       <hemisphereLight
-        args={["#fff8e8", "#c3a17b", 1.4]}
+        args={["#fff9ee", "#c9a982", 1.5]}
       />
 
-      {/* Main sunlight */}
       <directionalLight
-        position={[-6, 9, 5]}
-        intensity={2.2}
-        color="#fff1d2"
+        position={[-5, 9, 7]}
+        intensity={1.8}
+        color="#fff2d8"
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-left={-12}
-        shadow-camera-right={12}
-        shadow-camera-top={12}
-        shadow-camera-bottom={-12}
-        shadow-normalBias={0.03}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
+        shadow-normalBias={0.025}
+        shadow-radius={4}
       />
 
-      {/* Gentle fill light */}
       <directionalLight
-        position={[7, 4, -3]}
-        intensity={0.5}
-        color="#ffe5ba"
+        position={[6, 4, 5]}
+        intensity={0.7}
+        color="#fff5e4"
       />
     </>
   );

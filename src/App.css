@@ -1,10 +1,64 @@
-/* Interactive miniature room */
+.app {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Full-screen 3D environment */
+
+.app > .environment {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Interface layer */
+
+.interface {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  width: 100%;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Focus layout */
+
+.focus-page {
+  display: grid;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  align-items: center;
+  width: 100%;
+  min-height: calc(100svh - 120px);
+  padding: 0 5% 24px;
+}
+
+/* Reserved timer area */
+
+.timer-space {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 400px;
+}
+
+/* Interactive room */
 
 .room-space {
   position: relative;
   width: 100%;
   min-width: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,8 +68,7 @@
 .room-canvas {
   position: relative;
   width: 100%;
-  height: clamp(380px, 65vh, 680px);
-
+  height: clamp(350px, 72vh, 750px);
   background: transparent;
   touch-action: none;
 }
@@ -37,14 +90,85 @@
   color: var(--color-text-muted);
 }
 
-@media (max-width: 768px) {
+/* Temporary pages */
+
+.placeholder-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 65vh;
+  padding: 24px;
+  text-align: center;
+}
+
+.placeholder-page h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.placeholder-page p {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+  .focus-page {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .timer-space {
+    min-height: 280px;
+  }
+
   .room-canvas {
-    height: 400px;
+    height: 450px;
   }
 }
 
 @media (max-width: 480px) {
   .room-canvas {
     height: 340px;
+  }
+}
+
+@media (width > 900px) {
+  .interface {
+    height: 100svh;
+  }
+
+  .main-content {
+    min-height: 0;
+  }
+
+  .focus-page {
+    height: 100%;
+    min-height: 0;
+    padding: 0 5% 16px;
+  }
+
+  .timer-space {
+    min-height: 0;
+  }
+
+  .room-space {
+    height: min(100%, 740px);
+    min-height: 0;
+  }
+
+  .room-canvas {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+  }
+
+  .room-caption {
+    flex-shrink: 0;
+    padding-bottom: 0;
   }
 }
