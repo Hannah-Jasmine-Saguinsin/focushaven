@@ -1,60 +1,81 @@
-import { useLayoutEffect, useRef, type ComponentRef } from "react";
+import { useLayoutEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   OrbitControls,
   ContactShadows,
 } from "@react-three/drei";
-import { Box3, OrthographicCamera, Sphere, Vector3, type Group } from "three";
+import { OrthographicCamera } from "three";
 
 import Room from "./Room";
 import Lighting from "./Lighting";
 
-const DEFAULT_ZOOM = 85;
-
-function RoomView() {
-  const room = useRef<Group>(null);
-  const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
-  const bounds = useRef<Sphere>(null);
-  const camera = useThree((state) => state.camera);
-  const { width, height } = useThree((state) => state.size);
-  const invalidate = useThree((state) => state.invalidate);
+function AdaptiveCamera() {
+  const { camera, size, invalidate } = useThree();
 
   useLayoutEffect(() => {
-    if (
-      !(camera instanceof OrthographicCamera) ||
-      !room.current ||
-      !controls.current ||
-      width <= 0 ||
-      height <= 0
-    ) return;
+    if (camera instanceof OrthographicCamera) {
+      camera.zoom = Math.min(
+        size.width / 8.8,
+        size.height / 8.8
+      );
 
-    if (!bounds.current) {
-      bounds.current = new Box3()
-        .setFromObject(room.current)
-        .getBoundingSphere(new Sphere());
-      const center = bounds.current.center;
-      camera.position.add(center.clone().sub(new Vector3(0, 1.6, 0)));
-      controls.current.target.copy(center);
-      controls.current.update();
+      camera.updateProjectionMatrix();
+      invalidate();
     }
+  }, [camera, size.width, size.height, invalidate]);
 
-    // Fit the room at the default zoom in either orientation, with room to orbit.
-    const scale = (bounds.current.radius * 1.1 * DEFAULT_ZOOM) / Math.min(width, height);
-    camera.right = width * scale;
-    camera.left = -camera.right;
-    camera.top = height * scale;
-    camera.bottom = -camera.top;
-    camera.updateProjectionMatrix();
-    invalidate();
-  }, [camera, height, invalidate, width]);
+  return null;
+}
+
+function RoomControls() {
+  const { size } = useThree();
+
+  const safeZoom = Math.min(
+    size.width / 8.8,
+    size.height / 8.8
+  );
 
   return (
-    <>
+    <OrbitControls
+      makeDefault
+      target={[0, 1.6, 0]}
+      enableRotate
+      enableZoom
+      enableDamping
+      enablePan={false}
+      dampingFactor={0.08}
+      rotateSpeed={0.6}
+      zoomSpeed={0.5}
+      minZoom={safeZoom * 0.65}
+      maxZoom={safeZoom}
+      minPolarAngle={0.2}
+      maxPolarAngle={Math.PI / 2}
+    />
+  );
+}
+
+export default function RoomScene() {
+  return (
+    <Canvas
+      shadows
+      orthographic
+      dpr={[1, 1.5]}
+      frameloop="demand"
+      camera={{
+        position: [8, 6.5, 8],
+        near: 0.1,
+        far: 100,
+      }}
+      gl={{
+        antialias: true,
+        alpha: true,
+      }}
+    >
+      <AdaptiveCamera />
+
       <Lighting />
 
-      <group ref={room}>
-        <Room />
-      </group>
+      <Room />
 
       <ContactShadows
         position={[0, -0.32, 0]}
@@ -67,44 +88,7 @@ function RoomView() {
         color="#826345"
       />
 
-      <OrbitControls
-        ref={controls}
-        makeDefault
-        enablePan={false}
-        enableZoom
-        enableDamping
-        dampingFactor={0.08}
-        minZoom={35}
-        maxZoom={120}
-        minPolarAngle={Math.PI / 6}
-        maxPolarAngle={Math.PI / 2.3}
-        minAzimuthAngle={0}
-        maxAzimuthAngle={Math.PI / 2}
-      />
-    </>
-  );
-}
-
-export default function RoomScene() {
-  return (
-    <Canvas
-      shadows
-      orthographic
-      dpr={[1, 1.5]}
-      frameloop="demand"
-      camera={{
-        manual: true,
-        position: [8, 6.5, 8],
-        zoom: DEFAULT_ZOOM,
-        near: 0.1,
-        far: 100,
-      }}
-      gl={{
-        antialias: true,
-        alpha: true,
-      }}
-    >
-      <RoomView />
+      <RoomControls />
     </Canvas>
   );
 }
