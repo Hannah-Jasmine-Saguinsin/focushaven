@@ -1,0 +1,45 @@
+:root {
+  /* Brand colors */
+    --color-vanilla: #fff8e9;
+    --color-butter: #f8e3a5;
+    --color-honey: #f2cd83;
+    --color-biscuit: #e9d4b5;
+    --color-caramel: #c3a17b;
+    --color-cocoa: #624832;
+
+  /* Semantic colors */
+    --color-background: var(--color-vanilla);
+    --color-primary: var(--color-butter);
+    --color-accent: var(--color-honey);
+    --color-text: var(--color-cocoa);
+    --color-text-muted: #947b62;
+
+  /* Typography */
+    --font-primary: "Plus Jakarta Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+  /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+  /* Rounded surfaces */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+
+  /* Animation */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 500ms ease;
+
+  /* Layering */
+    --layer-scene: 0;
+    --layer-interface: 10;
+    --layer-navigation: 20;
+    --layer-modal: 100;
+}
